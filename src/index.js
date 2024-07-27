@@ -1,12 +1,34 @@
 require('dotenv').config()
 const { DisTube } = require('distube');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
 const { readdirSync } = require('fs');
 const path = require('path');
 const { GiveawaysManager } = require("discord-giveaways");
 
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates,GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessageReactions, ] });
+
+//status
+
+
+let status = [
+  {
+    name: '.help',
+    type: ActivityType.Streaming,
+    url: 'https://youtu.be/bTOJiLl8tkA?si=5nZORc7QvB5jF4Nx',
+  },
+  {
+    name: 'music',
+  },
+  {
+    name: 'yotube',
+    type: ActivityType.Watching,
+  },
+  {
+    name: 'gaming',
+    type: ActivityType.Listening,
+  },
+];
 
 const prefix = ('!');
 
@@ -34,8 +56,13 @@ const loadCommands = () => {
 // Call the function to load commands
 loadCommands();
 
-client.once('ready', () => {
-  console.log(`Logged in as ${client.user.tag}`);
+client.on('ready', (c) => {
+  console.log(`✅ ${c.user.tag} is online.`);
+
+  setInterval(() => {
+    let random = Math.floor(Math.random() * status.length);
+    client.user.setActivity(status[random]);
+  }, 100000000);
 });
 
 client.on('messageCreate', message => {
@@ -171,4 +198,4 @@ client.once('ready', () => {
 
 
 
-client.login("MTI1ODA4NjY1MTY0NTkxOTMyNA.GJUrAA.Lio_KyCXkJteXJcZpeWA3dRIIqK7GGctDThlmA");
+client.login("MTI1ODA4NjY1MTY0NTkxOTMyNA.GJjtsk.d_LbJs42vNej3v1x8ELqo3eBuz4Ei1WcZWXThM");
